@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="manage.hardware">
+	<update id="hwupdate">
+		CALL DOWNLOAD_ENABLE(#{AuthKey})
+	</update>
+</mapper>

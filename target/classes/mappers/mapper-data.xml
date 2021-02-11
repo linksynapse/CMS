@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="manage.product">
+	<select id="camp" resultType="com.bluzen.acs.obj.Product">
+		SELECT ProductCodeNumber AS Value, Name FROM Camp
+	</select>
+	
+	<select id="company" resultType="com.bluzen.acs.obj.Product">
+		SELECT ProductCodeNumber AS Value, Name FROM Company
+	</select>
+	
+	<select id="gender" resultType="com.bluzen.acs.obj.Product">
+		SELECT ProductCodeNumber AS Value, Name FROM Gender
+	</select>
+	
+	<select id="nationality" resultType="com.bluzen.acs.obj.Product">
+		SELECT ProductCodeNumber AS Value, Name FROM Nationality
+	</select>
+	
+	<select id="position" resultType="com.bluzen.acs.obj.Product">
+		SELECT ProductCodeNumber AS Value, Name FROM Position
+	</select>
+	
+	<select id="projectsite" resultType="com.bluzen.acs.obj.Product">
+		SELECT ProductCodeNumber AS Value, Name FROM Projectsite
+	</select>
+</mapper>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="manage.search">
+	<select id="infomation" resultType="com.bluzen.acs.obj.SearchWorkerResult">
+		SELECT A.Badge, A.NPNumber AS 'NationalID', A.Name, 
+			F.Name AS Nationality, B.Name AS Gender,C.Name AS Position,
+			D.Name AS Company, E.Name AS Camp, IF(A.WorkStatus,'On Work','Out') AS Status,
+			IFNULL(G.Name,'None') AS Location, A.DateOfIssuance, IFNULL(A.Mobile,"N/A") AS Mobile, IFNULL((SELECT Name FROM Company WHERE ProductCodeNumber = A.Company_2),"N/A") AS SubContractor,
+			IFNULL(A.CardNumber,"N/A") AS CardNumber, IFNULL(A.Notes,"N/A") AS Notes, A.Used
+		FROM User AS A
+		LEFT JOIN Gender AS B
+		ON A.Gender = B.ProductCodeNumber
+		LEFT JOIN Position AS C
+		ON A.Position = C.ProductCodeNumber
+		LEFT JOIN Company AS D
+		ON A.Company = D.ProductCodeNumber
+		LEFT JOIN Camp AS E
+		ON A.Camp = E.ProductCodeNumber
+		LEFT JOIN Nationality AS F
+		ON A.Nationality = F.ProductCodeNumber
+		LEFT JOIN Projectsite AS G
+		ON A.ProjectSite = G.ProductCodeNumber
+		WHERE IFNULL(A.Badge,"") LIKE CONCAT('%',#{Badge},'%')
+		AND IFNULL(A.NPNumber,"") LIKE CONCAT('%',#{NationalID},'%')
+		AND IFNULL(A.Name,"") LIKE CONCAT('%',#{Name},'%')
+		AND IFNULL(F.Name,"") LIKE CONCAT('%',#{Nationality},'%')
+		AND IFNULL(B.Name,"") LIKE CONCAT('%',#{Gender},'%')
+		AND IFNULL(C.Name,"") LIKE CONCAT('%',#{Position},'%')
+		AND IFNULL(D.Name,"") LIKE CONCAT('%',#{Company},'%')
+		AND IFNULL(E.Name,"") LIKE CONCAT('%',#{Camp},'%')
+		AND IFNULL(A.Mobile,"N/A") LIKE CONCAT('%',#{Mobile},'%')
+		AND IF(A.WorkStatus,'On Work','Out') LIKE CONCAT('%',#{Status},'%')
+		AND IFNULL((SELECT Name FROM Company WHERE ProductCodeNumber = A.Company_2),"") LIKE CONCAT('%',#{SubContractor},'%')
+		AND IFNULL(G.Name,'None') LIKE CONCAT('%',#{Location},'%')
+		AND IFNULL(A.CardNumber,"N/A") LIKE CONCAT('%',#{CardNumber},'%')
+		AND IFNULL(A.Notes,"N/A") LIKE CONCAT('%',#{Notes},'%')
+		AND A.Used = ${Used}
+	</select>
+	<select id="infomationouse" resultType="com.bluzen.acs.obj.SearchWorkerResult">
+		SELECT A.Badge, A.NPNumber AS 'NationalID', A.Name, 
+			F.Name AS Nationality, B.Name AS Gender,C.Name AS Position,
+			D.Name AS Company, E.Name AS Camp, IF(A.WorkStatus,'On Work','Out') AS Status,
+			IFNULL(G.Name,'None') AS Location, A.DateOfIssuance, IFNULL(A.Mobile,"N/A") AS Mobile, IFNULL((SELECT Name FROM Company WHERE ProductCodeNumber = A.Company_2),"N/A") AS SubContractor,
+			IFNULL(A.CardNumber,"N/A") AS CardNumber, IFNULL(A.Notes,"N/A") AS Notes, A.Used
+		FROM User AS A
+		LEFT JOIN Gender AS B
+		ON A.Gender = B.ProductCodeNumber
+		LEFT JOIN Position AS C
+		ON A.Position = C.ProductCodeNumber
+		LEFT JOIN Company AS D
+		ON A.Company = D.ProductCodeNumber
+		LEFT JOIN Camp AS E
+		ON A.Camp = E.ProductCodeNumber
+		LEFT JOIN Nationality AS F
+		ON A.Nationality = F.ProductCodeNumber
+		LEFT JOIN Projectsite AS G
+		ON A.ProjectSite = G.ProductCodeNumber
+		WHERE IFNULL(A.Badge,"") LIKE CONCAT('%',#{Badge},'%')
+		AND IFNULL(A.NPNumber,"") LIKE CONCAT('%',#{NationalID},'%')
+		AND IFNULL(A.Name,"") LIKE CONCAT('%',#{Name},'%')
+		AND IFNULL(F.Name,"") LIKE CONCAT('%',#{Nationality},'%')
+		AND IFNULL(B.Name,"") LIKE CONCAT('%',#{Gender},'%')
+		AND IFNULL(C.Name,"") LIKE CONCAT('%',#{Position},'%')
+		AND IFNULL(D.Name,"") LIKE CONCAT('%',#{Company},'%')
+		AND IFNULL(E.Name,"") LIKE CONCAT('%',#{Camp},'%')
+		AND IFNULL(A.Mobile,"N/A") LIKE CONCAT('%',#{Mobile},'%')
+		AND IF(A.WorkStatus,'On Work','Out') LIKE CONCAT('%',#{Status},'%')
+		AND IFNULL((SELECT Name FROM Company WHERE ProductCodeNumber = A.Company_2),"") LIKE CONCAT('%',#{SubContractor},'%')
+		AND IFNULL(G.Name,'None') LIKE CONCAT('%',#{Location},'%')
+		AND IFNULL(A.CardNumber,"N/A") LIKE CONCAT('%',#{CardNumber},'%')
+		AND IFNULL(A.Notes,"N/A") LIKE CONCAT('%',#{Notes},'%')
+	</select>
+	<select id="infomationlimit" resultType="com.bluzen.acs.obj.SearchWorkerResult">
+		SELECT A.Badge, A.NPNumber AS 'NationalID', A.Name, 
+			F.Name AS Nationality, B.Name AS Gender,C.Name AS Position,
+			D.Name AS Company, E.Name AS Camp, IF(A.WorkStatus,'On Work','Out') AS Status,
+			IFNULL(G.Name,'None') AS Location, A.DateOfIssuance, IFNULL(A.Mobile,"N/A") AS Mobile, IFNULL((SELECT Name FROM Company WHERE ProductCodeNumber = A.Company_2),"N/A") AS SubContractor,
+			IFNULL(A.CardNumber,"N/A") AS CardNumber, IFNULL(A.Notes,"N/A") AS Notes, A.Used
+		FROM User AS A
+		LEFT JOIN Gender AS B
+		ON A.Gender = B.ProductCodeNumber
+		LEFT JOIN Position AS C
+		ON A.Position = C.ProductCodeNumber
+		LEFT JOIN Company AS D
+		ON A.Company = D.ProductCodeNumber
+		LEFT JOIN Camp AS E
+		ON A.Camp = E.ProductCodeNumber
+		LEFT JOIN Nationality AS F
+		ON A.Nationality = F.ProductCodeNumber
+		LEFT JOIN Projectsite AS G
+		ON A.ProjectSite = G.ProductCodeNumber
+		WHERE IFNULL(A.Badge,"") LIKE CONCAT('%',#{Badge},'%')
+		AND IFNULL(A.NPNumber,"") LIKE CONCAT('%',#{NationalID},'%')
+		AND IFNULL(A.Name,"") LIKE CONCAT('%',#{Name},'%')
+		AND IFNULL(F.Name,"") LIKE CONCAT('%',#{Nationality},'%')
+		AND IFNULL(B.Name,"") LIKE CONCAT('%',#{Gender},'%')
+		AND IFNULL(C.Name,"") LIKE CONCAT('%',#{Position},'%')
+		AND IFNULL(D.Name,"") LIKE CONCAT('%',#{Company},'%')
+		AND IFNULL(E.Name,"") LIKE CONCAT('%',#{Camp},'%')
+		AND IFNULL(A.Mobile,"N/A") LIKE CONCAT('%',#{Mobile},'%')
+		AND IF(A.WorkStatus,'On Work','Out') LIKE CONCAT('%',#{Status},'%')
+		AND IFNULL((SELECT Name FROM Company WHERE ProductCodeNumber = A.Company_2),"") LIKE CONCAT('%',#{SubContractor},'%')
+		AND IFNULL(G.Name,'None') LIKE CONCAT('%',#{Location},'%')
+		AND IFNULL(A.CardNumber,"N/A") LIKE CONCAT('%',#{CardNumber},'%')
+		AND IFNULL(A.Notes,"N/A") LIKE CONCAT('%',#{Notes},'%')
+		LIMIT 200
+	</select>
+	<select id="history" resultType="com.bluzen.acs.obj.SearchIOResult">
+		SELECT B.Badge, B.Name, D.Name AS Company,E.Name AS Location ,G.Name AS Type, DATE_ADD(A.Time, INTERVAL F.UTC HOUR) AS Time, F.Name AS Region FROM History AS A
+		JOIN User AS B
+		ON A.Badge = B.Badge
+		JOIN Device AS C
+		ON A.Device = C.Serial
+		JOIN Company AS D
+		ON B.Company = D.ProductCodeNumber
+		JOIN Projectsite AS E
+		ON E.ProductCodeNumber = C.ProjectSite
+		JOIN Region AS F
+		ON C.Region = F.ProductCodeNumber
+		JOIN DoorType AS G
+		ON C.Doortype = G.ProductCodeNumber
+		WHERE B.Badge LIKE CONCAT('%',#{Badge},'%')
+		AND IFNULL(B.Name,"") LIKE CONCAT('%',#{Name},'%')
+		AND IFNULL(D.Name,"") LIKE CONCAT('%',#{Company},'%')
+		AND IFNULL(E.Name,"") LIKE CONCAT('%',#{Location},'%')
+		AND G.Name LIKE CONCAT('%',#{Type},'%')
+		AND DATE_ADD(A.Time, INTERVAL F.UTC HOUR) BETWEEN #{Start} AND #{End}
+		ORDER BY DATE_ADD(A.Time, INTERVAL F.UTC HOUR) DESC
+	</select>
+	<select id="historylimit" resultType="com.bluzen.acs.obj.SearchIOResult">
+		SELECT B.Badge, B.Name, D.Name AS Company,E.Name AS Location ,G.Name AS Type, DATE_ADD(A.Time, INTERVAL F.UTC HOUR) AS Time, F.Name AS Region FROM History AS A
+		JOIN User AS B
+		ON A.Badge = B.Badge
+		JOIN Device AS C
+		ON A.Device = C.Serial
+		JOIN Company AS D
+		ON B.Company = D.ProductCodeNumber
+		JOIN Projectsite AS E
+		ON E.ProductCodeNumber = C.ProjectSite
+		JOIN Region AS F
+		ON C.Region = F.ProductCodeNumber
+		JOIN DoorType AS G
+		ON C.Doortype = G.ProductCodeNumber
+		WHERE B.Badge LIKE CONCAT('%',#{Badge},'%')
+		AND IFNULL(B.Name,"") LIKE CONCAT('%',#{Name},'%')
+		AND IFNULL(D.Name,"") LIKE CONCAT('%',#{Company},'%')
+		AND G.Name LIKE CONCAT('%',#{Type},'%')
+		ORDER BY DATE_ADD(A.Time, INTERVAL F.UTC HOUR) DESC
+		LIMIT 200
+	</select>
+	<select id="hardware" resultType="com.bluzen.acs.obj.HardwareInfo">
+		SELECT A.AuthKey, A.Serial, C.Name AS Location, A.Status, IF(A.Doortype,"IN", "OUT") AS DoorType ,B.Name AS Region FROM Device AS A
+		JOIN Region AS B
+		ON A.Region = B.ProductCodeNumber
+		JOIN Projectsite AS C
+		ON A.ProjectSite = C.ProductCodeNumber
+	</select>
+</mapper>

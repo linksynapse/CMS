@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="manage.dashboard">
+	<select id="infomation" resultType="com.bluzen.acs.obj.PsInfo">
+		SELECT B.ProductCodeNumber AS Value, B.Name, IFNULL(A.Count,0) AS Count FROM (
+			SELECT B.ProjectSite ,COUNT(*) AS Count FROM (
+				SELECT t1.Badge, t1.Device ,t1.`Time` FROM History AS t1,(
+					SELECT Badge, Device, MAX(Time) AS Time FROM History WHERE DATE_FORMAT(DATE_ADD(Time, INTERVAL 7 HOUR),"%Y-%m-%d") = CURDATE() GROUP BY Badge
+				) AS t2
+				WHERE t1.Badge = t2.Badge
+				AND t1.Time = t2.Time
+			) AS A
+			JOIN Device AS B
+			ON A.Device = B.Serial
+			WHERE B.Doortype = 1
+			GROUP BY B.ProjectSite                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+		) AS A
+		RIGHT JOIN Projectsite AS B
+		ON A.ProjectSite = B.ProductCodeNumber
+	</select>
+	
+	<select id="infomationSfEx" resultType="com.bluzen.acs.obj.PsInfo">
+		SELECT B.ProductCodeNumber AS Value, D.Name, IFNULL(COUNT(*),0) AS Count FROM (
+				SELECT B.ProjectSite, A.Badge FROM (
+					SELECT t1.Badge, t1.Device ,t1.`Time` FROM History AS t1,
+					(
+						SELECT Badge, Device, MAX(Time) AS Time FROM History WHERE DATE_FORMAT(DATE_ADD(Time, INTERVAL 7 HOUR),"%Y-%m-%d") = CURDATE() GROUP BY Badge
+					) AS t2
+					WHERE t1.Badge = t2.Badge
+					AND t1.Time = t2.Time
+				) AS A
+				JOIN Device AS B
+				ON A.Device = B.Serial
+				JOIN User AS C
+				ON C.Badge = A.Badge
+				WHERE B.Doortype = 1
+			) AS A
+		RIGHT JOIN Projectsite AS B
+		ON A.ProjectSite = B.ProductCodeNumber
+		JOIN User AS C
+		ON A.Badge = C.Badge
+		JOIN Company AS D
+		ON C.Company = D.ProductCodeNumber
+		WHERE B.ProductCodeNumber = ${pjt}
+		GROUP BY B.Name, D.Name 
+	</select>
+</mapper>

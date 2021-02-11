@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="adding.category">
+	<insert id="Camp">
+		INSERT INTO Camp (Name, ShortCut, Address) VALUES (#{Name}, #{ShortCut}, #{Address})
+	</insert>
+	<insert id="Nationality">
+		INSERT INTO Nationality VALUES (NULL, #{Name}, #{ShortCut})
+	</insert>
+	<insert id="Position">
+		INSERT INTO Position VALUES (NULL, #{Name}, #{ShortCut})
+	</insert>
+	<insert id="Company">
+		INSERT INTO Company (Name, ShortCut) VALUES (#{Name}, #{ShortCut})
+	</insert>
+	<update id="mCamp">
+		UPDATE Camp SET Name = #{Name}, ShortCut = #{ShortCut}, Address = #{Address} WHERE ProductCodeNumber = ${ProductCodeNumber}
+	</update>
+	<update id="mNationality">
+		UPDATE Nationality SET Name = #{Name}, ShortCut = #{ShortCut} WHERE ProductCodeNumber = ${ProductCodeNumber}
+	</update>
+	<update id="mPosition">
+		UPDATE Position SET Name = #{Name}, ShortCut = #{ShortCut} WHERE ProductCodeNumber = ${ProductCodeNumber}
+	</update>
+	<update id="mCompany">
+		UPDATE Company SET Name = #{Name}, ShortCut = #{ShortCut} WHERE ProductCodeNumber = ${ProductCodeNumber}
+	</update>
+	<delete id="dCamp">
+		DELETE FROM Camp WHERE ProductCodeNumber = ${ProductCodeNumber}
+	</delete>
+	<delete id="dNationality">
+		DELETE FROM Nationality WHERE ProductCodeNumber = ${ProductCodeNumber}
+	</delete>
+	<delete id="dPosition">
+		DELETE FROM Position WHERE ProductCodeNumber = ${ProductCodeNumber}
+	</delete>
+	<delete id="dCompany">
+		DELETE FROM Company WHERE ProductCodeNumber = ${ProductCodeNumber}
+	</delete>
+</mapper>

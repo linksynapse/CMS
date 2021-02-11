@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="manage.account">
+	<select id="login" resultType="com.bluzen.acs.obj.WebAccount">
+		SELECT A.idx, A.Security, A.Owner, B.Name, B.ShortCut, A.Description FROM Account AS A
+		JOIN Company AS B
+		ON A.Owner = B.ProductCodeNumber
+		WHERE Identify = #{Identify}
+		AND Password = PASSWORD(#{Password})
+	</select>
+	
+	<insert id="user">
+		INSERT INTO User (Badge, NPNumber, Name, Nationality, Gender, Position, Company, Company_2, Camp, CardNumber, Mobile, Notes, DateOfIssuance) VALUES
+		(#{badge}, #{nationalid}, #{name}, ${national}, ${gender}, ${position}, ${company}, ${company_2}, ${camp}, #{cardnumber}, #{mobile}, #{Notes}, #{DateOfIssuance})
+	</insert>
+	
+	<insert id="permit">
+		INSERT INTO Permit (Badge, Projectsite) VALUES (#{badge}, ${projectsite})
+	</insert>
+	
+	<select id="userinfo" resultType="com.bluzen.acs.obj.SelectUser">
+		SELECT Badge, NPNumber, Name, Nationality, Gender, Position, Company, Camp, CardNumber, Expire, Used, Mobile, Notes, DateOfIssuance, IFNULL(Company_2,9999) AS Company_2 FROM User WHERE Badge = #{Badge}
+	</select>
+	
+	<select id="userpermit" resultType="Integer">
+		SELECT Projectsite FROM Permit WHERE Badge = #{Badge}
+	</select>
+	
+	<delete id="permitdelete">
+		DELETE FROM Permit WHERE Badge = #{badge}
+	</delete>
+	
+	<update id="usermodify">
+		UPDATE User SET NPNumber = #{nationalid},
+		Name = #{name},
+		Nationality = ${national},
+		Gender = ${gender},
+		Position = ${position},
+		Company = ${company},
+		Company_2 = ${Company_2},
+		Mobile = #{Mobile},
+		Notes = #{Notes},
+		DateOfIssuance = #{DateOfIssuance},
+		Camp = ${camp},
+		CardNumber = #{cardnumber}
+		WHERE Badge = #{badge}
+	</update>
+	
+	<update id="userenable">
+		UPDATE User SET Used = 1 WHERE Badge = #{badge}
+	</update>
+	
+	<update id="userdisable">
+		UPDATE User SET Notes = CONCAT('Original CardNumber [',(SELECT CardNumber FROM User WHERE Badge = #{badge}),']'), Used = ${reason}, CardNumber = NULL WHERE Badge = #{badge}
+	</update>
+	
+	<update id="userextension">
+		UPDATE User SET Expire = DATE_ADD(NOW(),INTERVAL ${days} DAY) WHERE Badge = #{badge}
+	</update>
+</mapper>
